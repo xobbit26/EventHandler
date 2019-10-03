@@ -1,3 +1,7 @@
 EventHandler/.vs/EventHandler/v16/
 EventHandler/EventHandler.Web/obj/
 EventHandler/EventHandler.Web/bin/
+EventHandler/EventHandler.DAL/obj/
+EventHandler/EventHandler.DAL/bin/
+EventHandler/EventHandler.DAL.Interfaces/obj/
+EventHandler/EventHandler.DAL.Interfaces/bin/
