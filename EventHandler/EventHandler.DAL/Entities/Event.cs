@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EventHandler.DAL.Entities
 {
-    class Event
+    public class Event
     {
         public long Id { get; set; }
         public string Description { get; set; }

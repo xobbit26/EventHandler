@@ -10,7 +10,7 @@ namespace EventHandler.DAL
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(@"Host=localhost;Port=5433;Database=EventHandler;Username=postgres;Password=admin");
+                optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=EventHandler;Username=postgres;Password=admin");
             }
         }
     }
