@@ -25,6 +25,15 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "EventHandler.Web.AlternateSQLConnection": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "event",
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "DevelopmentAlternateSQLConnection"
+      }
     }
   }
 }
