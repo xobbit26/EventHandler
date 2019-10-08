@@ -13,7 +13,6 @@ namespace EventHandler.DAL
 
         DbSet<Event> Events { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration<Event>(new EventConfiguration());

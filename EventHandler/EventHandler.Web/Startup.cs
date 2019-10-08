@@ -32,19 +32,23 @@ namespace EventHandler.Web
                 options.UseNpgsql(Configuration.GetConnectionString("DataConnection"),
                     assembly => assembly.MigrationsAssembly(typeof(EventHandlerDbContext).Assembly.FullName));
             });
+            services.AddLogging();
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {            
-            if (env.IsDevelopment())
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
+        {
+            logger.LogDebug($"env.EnvironmentName: {env.EnvironmentName}");
+            logger.LogDebug($"connectionString: {Configuration.GetConnectionString("DataConnection")}");
+
+            if (env.IsDevelopment()
+                || env.EnvironmentName == "DevelopmentAlternateSQLConnection")
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseRouting();
-
             //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
