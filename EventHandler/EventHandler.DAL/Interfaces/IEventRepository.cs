@@ -1,7 +1,5 @@
 ﻿using EventHandler.DAL.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EventHandler.DAL.Interfaces
 {
@@ -10,6 +8,7 @@ namespace EventHandler.DAL.Interfaces
         IEnumerable<Event> GetEvents();
         Event GetEvent(long id);
         void SaveEvent(Event eventItem);
-        void DeleteEvent(long id);
+        void DeleteEvent(Event eventItem);
+        void SaveChanges();
     }
 }

@@ -2,30 +2,40 @@
 using EventHandler.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EventHandler.DAL.Repositories
 {
     class EventRepository : IEventRepository
     {
-        public void DeleteEvent(long id)
+        private readonly EventHandlerDbContext _dbContext;
+
+        public EventRepository(EventHandlerDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
         }
+
+        public IEnumerable<Event> GetEvents() => _dbContext.Events;
 
         public Event GetEvent(long id)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Event> GetEvents()
-        {
-            throw new NotImplementedException();
+            return _dbContext.Events.FirstOrDefault(s => s.Id == id);
         }
 
         public void SaveEvent(Event eventItem)
         {
-            throw new NotImplementedException();
+            _dbContext.Events.Add(eventItem);
+        }
+
+        public void DeleteEvent(Event eventItem)
+        {
+            _dbContext.Events.Remove(eventItem);
+        }
+
+        public void SaveChanges()
+        {
+            _dbContext.SaveChanges();
         }
     }
 }
