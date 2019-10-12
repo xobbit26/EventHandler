@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EventHandler.DAL\EventHandler.DAL.csproj" />
+    <ProjectReference Include="..\EventHandler.DTO\EventHandler.DTO.csproj" />
+  </ItemGroup>
+
 </Project>

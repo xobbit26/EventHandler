@@ -9,3 +9,5 @@ EventHandler/.vs/
 EventHandler/EventHandler.Web/EventHandler.Web.csproj.user
 EventHandler/EventHandler.DTO/obj/
 EventHandler/EventHandler.Services/obj/
+EventHandler/EventHandler.DTO/bin/
+EventHandler/EventHandler.Services/bin/
