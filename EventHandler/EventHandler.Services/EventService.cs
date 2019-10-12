@@ -29,9 +29,7 @@ namespace EventHandler.Services
             var eventEntity = _eventRepository.GetEvent(id);
 
             if (eventEntity == null)
-            {
                 throw new ArgumentNullException(EVENT_NULL_EXCEPTION);
-            }
 
             return MapEventEntityToDTO(eventEntity);
         }
@@ -58,9 +56,7 @@ namespace EventHandler.Services
             var eventEntityToUpdate = _eventRepository.GetEvent(id);
 
             if (eventEntityToUpdate == null)
-            {
                 throw new ArgumentNullException(EVENT_NULL_EXCEPTION);
-            }
 
             EventDTOToEntity(eventEntityToUpdate, eventDTO);
 

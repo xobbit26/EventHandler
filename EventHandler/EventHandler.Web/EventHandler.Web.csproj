@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EventHandler.DAL\EventHandler.DAL.csproj" />
+    <ProjectReference Include="..\EventHandler.DTO\EventHandler.DTO.csproj" />
+    <ProjectReference Include="..\EventHandler.Services\EventHandler.Services.csproj" />
   </ItemGroup>
 
 </Project>
