@@ -7,7 +7,7 @@ using System.Text;
 
 namespace EventHandler.DAL.Repositories
 {
-    class EventRepository : IEventRepository
+    public class EventRepository : IEventRepository
     {
         private readonly EventHandlerDbContext _dbContext;
 

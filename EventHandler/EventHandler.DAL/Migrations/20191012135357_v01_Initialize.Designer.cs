@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventHandler.DAL.Migrations
 {
     [DbContext(typeof(EventHandlerDbContext))]
-    [Migration("20191012115457_v01_Initialize")]
+    [Migration("20191012135357_v01_Initialize")]
     partial class v01_Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,6 @@ namespace EventHandler.DAL.Migrations
                         .HasMaxLength(250);
 
                     b.Property<string>("Responsible")
-                        .IsRequired()
                         .HasColumnName("responsible")
                         .HasColumnType("character varying(250)")
                         .HasMaxLength(250);

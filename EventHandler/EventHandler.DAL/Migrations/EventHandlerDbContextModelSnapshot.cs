@@ -62,7 +62,6 @@ namespace EventHandler.DAL.Migrations
                         .HasMaxLength(250);
 
                     b.Property<string>("Responsible")
-                        .IsRequired()
                         .HasColumnName("responsible")
                         .HasColumnType("character varying(250)")
                         .HasMaxLength(250);

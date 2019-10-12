@@ -29,8 +29,7 @@ namespace EventHandler.DAL.EntitiesConfigurations
 
             builder.Property(x => x.Responsible)
                 .HasColumnName("responsible")
-                .HasMaxLength(250)
-                .IsRequired();
+                .HasMaxLength(250);
 
             builder.Property(x => x.Resolver)
                 .HasColumnName("resolver")
