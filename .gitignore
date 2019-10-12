@@ -7,3 +7,5 @@ EventHandler/EventHandler.DAL.Interfaces/obj/
 EventHandler/EventHandler.DAL.Interfaces/bin/
 EventHandler/.vs/
 EventHandler/EventHandler.Web/EventHandler.Web.csproj.user
+EventHandler/EventHandler.DTO/obj/
+EventHandler/EventHandler.Services/obj/
