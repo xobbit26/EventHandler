@@ -16,11 +16,16 @@ namespace EventHandler.DAL.Repositories
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Event> GetEvents() => _dbContext.Events;
+        public IEnumerable<Event> GetEvents()
+        {
+            return _dbContext.Events
+                .Where(s => !s.IsDeleted);
+        }
 
         public Event GetEvent(long id)
         {
-            return _dbContext.Events.FirstOrDefault(s => s.Id == id);
+            return _dbContext.Events
+                .FirstOrDefault(s => s.Id == id);
         }
 
         public void SaveEvent(Event eventItem)
