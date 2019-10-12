@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventHandler.DAL.Migrations
 {
     [DbContext(typeof(EventHandlerDbContext))]
-    [Migration("20191008180556_v01_Initial")]
-    partial class v01_Initial
+    [Migration("20191012115457_v01_Initialize")]
+    partial class v01_Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
