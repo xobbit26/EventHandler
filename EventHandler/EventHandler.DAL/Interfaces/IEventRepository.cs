@@ -8,7 +8,6 @@ namespace EventHandler.DAL.Interfaces
         IEnumerable<Event> GetEvents();
         Event GetEvent(long id);
         void SaveEvent(Event eventItem);
-        void DeleteEvent(Event eventItem);
         void SaveChanges();
     }
 }

@@ -11,11 +11,15 @@ namespace EventHandler.Services
     public class EventService : IEventService
     {
         private readonly IEventRepository _eventRepository;
-        private const string EVENT_NULL_EXCEPTION = "event is null";
+        private readonly IEventStatusRepository _eventStatusRepository;
 
-        public EventService(IEventRepository eventRepository)
+        private const string EVENT_NULL_EXCEPTION = "event is null";
+        private const string PENDING_EVENTSTATUS_SYSNAME = "pending";
+
+        public EventService(IEventRepository eventRepository, IEventStatusRepository eventStatusRepository)
         {
             _eventRepository = eventRepository;
+            _eventStatusRepository = eventStatusRepository;
         }
 
         public IEnumerable<EventDTO> GetEvents()
@@ -36,15 +40,16 @@ namespace EventHandler.Services
 
         public void CreateEvent(EventDTO eventDTO)
         {
+            EventStatus pendingEventStatus = _eventStatusRepository
+                .GetEventStatusBySysName(PENDING_EVENTSTATUS_SYSNAME);
+
             var eventEntity = new Event()
             {
                 Description = eventDTO.Description,
                 Applicant = eventDTO.Applicant,
                 ApplyDateTime = DateTime.UtcNow,
                 Responsible = eventDTO.Responsible,
-
-                //TODO: Cteate statuses table in db and relate on it
-                Status = "test status"
+                EventStatus = pendingEventStatus
             };
 
             _eventRepository.SaveEvent(eventEntity);
@@ -68,7 +73,6 @@ namespace EventHandler.Services
             var eventEntityToDelete = _eventRepository.GetEvent(id);
             eventEntityToDelete.IsDeleted = true;
 
-            _eventRepository.DeleteEvent(eventEntityToDelete);
             _eventRepository.SaveChanges();
         }
 
@@ -84,7 +88,9 @@ namespace EventHandler.Services
                 Resolver = eventEntity.Resolver,
                 ResolveDateTime = eventEntity.ResolveDateTime,
                 Notes = eventEntity.Notes,
-                Status = eventEntity.Status
+
+                //TODO: Create Resource table for retrieving name of event depends on language
+                EventStatus = eventEntity.EventStatus.SysName
             };
         }
 
@@ -98,7 +104,7 @@ namespace EventHandler.Services
             eventEntity.Resolver = eventDTO.Resolver;
             eventEntity.ResolveDateTime = eventDTO.ResolveDateTime;
             eventEntity.Notes = eventDTO.Notes;
-            eventEntity.Status = eventDTO.Status;
+            eventEntity.EventStatusId = eventDTO.EventStatusId;
 
             return eventEntity;
         }

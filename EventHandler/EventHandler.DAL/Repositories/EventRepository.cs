@@ -1,9 +1,8 @@
 ﻿using EventHandler.DAL.Entities;
 using EventHandler.DAL.Interfaces;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EventHandler.DAL.Repositories
 {
@@ -19,23 +18,19 @@ namespace EventHandler.DAL.Repositories
         public IEnumerable<Event> GetEvents()
         {
             return _dbContext.Events
-                .Where(s => !s.IsDeleted);
+                .Include(x => x.EventStatus)
+                .Where(x => !x.IsDeleted);
         }
 
         public Event GetEvent(long id)
         {
             return _dbContext.Events
-                .FirstOrDefault(s => s.Id == id);
+                .FirstOrDefault(x => x.Id == id && !x.IsDeleted);
         }
 
         public void SaveEvent(Event eventItem)
         {
             _dbContext.Events.Add(eventItem);
-        }
-
-        public void DeleteEvent(Event eventItem)
-        {
-            _dbContext.Events.Remove(eventItem);
         }
 
         public void SaveChanges()
