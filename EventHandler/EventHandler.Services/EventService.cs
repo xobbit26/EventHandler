@@ -11,11 +11,16 @@ namespace EventHandler.Services
     public class EventService : IEventService
     {
         private readonly IEventRepository _eventRepository;
-        private const string EVENT_NULL_EXCEPTION = "event is null";
+        private readonly IEventStatusRepository _eventStatusRepository;
 
-        public EventService(IEventRepository eventRepository)
+        private const string EVENT_NOT_FOUND_EXCEPTION = "event is null";
+        private const string EVENT_STATUS_NOT_FOUND_EVCEPTION = "Event status with id {0} has not been found";
+        private const int PENDING_EVENT_STATUS_ID = 1;
+
+        public EventService(IEventRepository eventRepository, IEventStatusRepository eventStatusRepository)
         {
             _eventRepository = eventRepository;
+            _eventStatusRepository = eventStatusRepository;
         }
 
         public IEnumerable<EventDTO> GetEvents()
@@ -29,7 +34,7 @@ namespace EventHandler.Services
             var eventEntity = _eventRepository.GetEvent(id);
 
             if (eventEntity == null)
-                throw new ArgumentNullException(EVENT_NULL_EXCEPTION);
+                throw new ArgumentNullException(EVENT_NOT_FOUND_EXCEPTION);
 
             return MapEventEntityToDTO(eventEntity);
         }
@@ -42,9 +47,7 @@ namespace EventHandler.Services
                 Applicant = eventDTO.Applicant,
                 ApplyDateTime = DateTime.UtcNow,
                 Responsible = eventDTO.Responsible,
-
-                //TODO: Cteate statuses table in db and relate on it
-                Status = "test status"
+                EventStatusId = PENDING_EVENT_STATUS_ID
             };
 
             _eventRepository.SaveEvent(eventEntity);
@@ -56,10 +59,15 @@ namespace EventHandler.Services
             var eventEntityToUpdate = _eventRepository.GetEvent(id);
 
             if (eventEntityToUpdate == null)
-                throw new ArgumentNullException(EVENT_NULL_EXCEPTION);
+                throw new ArgumentNullException(EVENT_NOT_FOUND_EXCEPTION);
 
-            EventDTOToEntity(eventEntityToUpdate, eventDTO);
+            MapEventDTOToEntity(eventEntityToUpdate, eventDTO);
 
+            var eventStatus = _eventStatusRepository.GetEventStatus(eventDTO.StatusId);
+            if (eventStatus == null)
+                throw new ArgumentNullException(string.Format(EVENT_STATUS_NOT_FOUND_EVCEPTION, eventDTO.StatusId));
+
+            eventEntityToUpdate.EventStatusId = eventDTO.StatusId;
             _eventRepository.SaveChanges();
         }
 
@@ -84,13 +92,13 @@ namespace EventHandler.Services
                 Resolver = eventEntity.Resolver,
                 ResolveDateTime = eventEntity.ResolveDateTime,
                 Notes = eventEntity.Notes,
-                Status = eventEntity.Status
+                StatusId = eventEntity.EventStatusId,
+                StatusName = eventEntity.EventStatus.SysName
             };
         }
 
-        private Event EventDTOToEntity(Event eventEntity, EventDTO eventDTO)
+        private Event MapEventDTOToEntity(Event eventEntity, EventDTO eventDTO)
         {
-            eventEntity.Id = eventDTO.Id;
             eventEntity.Description = eventDTO.Description;
             eventEntity.Applicant = eventDTO.Applicant;
             eventEntity.ApplyDateTime = eventDTO.ApplyDateTime;
@@ -98,7 +106,6 @@ namespace EventHandler.Services
             eventEntity.Resolver = eventDTO.Resolver;
             eventEntity.ResolveDateTime = eventDTO.ResolveDateTime;
             eventEntity.Notes = eventDTO.Notes;
-            eventEntity.Status = eventDTO.Status;
 
             return eventEntity;
         }

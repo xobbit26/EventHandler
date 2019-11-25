@@ -33,6 +33,7 @@ namespace EventHandler.Web
             //DI configuration
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IEventStatusRepository, EventStatusRepository>();
 
             //Configuring db context
             services.AddDbContext<EventHandlerDbContext>(options =>
@@ -47,8 +48,8 @@ namespace EventHandler.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            //logger.LogDebug($"env.EnvironmentName: {env.EnvironmentName}");
-            //logger.LogDebug($"connectionString: {Configuration.GetConnectionString("DataConnection")}");
+            logger.LogDebug($"env.EnvironmentName: {env.EnvironmentName}");
+            logger.LogDebug($"connectionString: {Configuration.GetConnectionString("DataConnection")}");
 
             if (env.IsDevelopment()
                 || env.EnvironmentName == "DevelopmentAlternateSQLConnection")
