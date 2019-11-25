@@ -42,10 +42,6 @@ namespace EventHandler.DAL.Migrations
                         .HasColumnName("description")
                         .HasColumnType("text");
 
-                    b.Property<int>("EventStatusId")
-                        .HasColumnName("event_status_id")
-                        .HasColumnType("integer");
-
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("is_deleted")
@@ -70,66 +66,16 @@ namespace EventHandler.DAL.Migrations
                         .HasColumnType("character varying(250)")
                         .HasMaxLength(250);
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventStatusId");
-
-                    b.HasIndex("Id");
-
-                    b.ToTable("event");
-                });
-
-            modelBuilder.Entity("EventHandler.DAL.Entities.EventStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnName("is_deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("SysName")
-                        .IsRequired()
-                        .HasColumnName("sys_name")
-                        .HasColumnType("text");
+                    b.Property<string>("Status")
+                        .HasColumnName("status")
+                        .HasColumnType("character varying(250)")
+                        .HasMaxLength(250);
 
                     b.HasKey("Id");
 
                     b.HasIndex("Id");
 
-                    b.ToTable("event_status");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsDeleted = false,
-                            SysName = "pending"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsDeleted = false,
-                            SysName = "in_progress"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsDeleted = false,
-                            SysName = "done"
-                        });
-                });
-
-            modelBuilder.Entity("EventHandler.DAL.Entities.Event", b =>
-                {
-                    b.HasOne("EventHandler.DAL.Entities.EventStatus", "EventStatus")
-                        .WithMany("Events")
-                        .HasForeignKey("EventStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("events");
                 });
 #pragma warning restore 612, 618
         }

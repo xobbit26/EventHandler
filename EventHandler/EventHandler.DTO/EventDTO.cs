@@ -12,7 +12,6 @@ namespace EventHandler.DTO
         public string Resolver { get; set; }
         public DateTime? ResolveDateTime { get; set; }
         public string Notes { get; set; }
-        public int EventStatusId { get; set; }
-        public string EventStatus { get; set; }
+        public string Status { get; set; }
     }
 }

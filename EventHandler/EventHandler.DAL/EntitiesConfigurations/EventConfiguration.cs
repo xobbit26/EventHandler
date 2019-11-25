@@ -8,7 +8,7 @@ namespace EventHandler.DAL.EntitiesConfigurations
     {
         public void Configure(EntityTypeBuilder<Event> builder)
         {
-            builder.ToTable("event");
+            builder.ToTable("events");
 
             builder.HasKey(x => x.Id);
             builder.HasIndex(x => x.Id);
@@ -41,13 +41,15 @@ namespace EventHandler.DAL.EntitiesConfigurations
             builder.Property(x => x.Notes)
                 .HasColumnName("notes");
 
-            builder.Property(x => x.EventStatusId)
-                .HasColumnName("event_status_id")
-                .IsRequired();
+            builder.Property(x => x.Status)
+                .HasColumnName("status")
+                .HasMaxLength(250);
 
             builder.Property(x => x.IsDeleted)
                 .HasColumnName("is_deleted")
                 .HasDefaultValue(false);
+
+            builder.Property(x => x.Status).HasColumnName("status").HasMaxLength(250);
         }
     }
 }
