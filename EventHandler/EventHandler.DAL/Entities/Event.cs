@@ -12,7 +12,8 @@ namespace EventHandler.DAL.Entities
         public string Resolver { get; set; }
         public DateTime? ResolveDateTime { get; set; }
         public string Notes { get; set; }
-        public string Status { get; set; }
+        public long EventStatusId { get; set; }
+        public EventStatus EventStatus { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

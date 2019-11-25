@@ -10,15 +10,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventHandler.DAL.Migrations
 {
     [DbContext(typeof(EventHandlerDbContext))]
-    [Migration("20191012135357_v01_Initialize")]
-    partial class v01_Initialize
+    [Migration("20191125133504_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("EventHandler.DAL.Entities.Event", b =>
@@ -44,6 +44,10 @@ namespace EventHandler.DAL.Migrations
                         .HasColumnName("description")
                         .HasColumnType("text");
 
+                    b.Property<long>("EventStatusId")
+                        .HasColumnName("event_status_id")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("is_deleted")
@@ -68,16 +72,68 @@ namespace EventHandler.DAL.Migrations
                         .HasColumnType("character varying(250)")
                         .HasMaxLength(250);
 
-                    b.Property<string>("Status")
-                        .HasColumnName("status")
-                        .HasColumnType("character varying(250)")
-                        .HasMaxLength(250);
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventStatusId");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("event");
+                });
+
+            modelBuilder.Entity("EventHandler.DAL.Entities.EventStatus", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("is_deleted")
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("SysName")
+                        .IsRequired()
+                        .HasColumnName("sys_name")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Id");
 
-                    b.ToTable("events");
+                    b.ToTable("event_status");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            IsDeleted = false,
+                            SysName = "pending"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            IsDeleted = false,
+                            SysName = "in_progress"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            IsDeleted = false,
+                            SysName = "done"
+                        });
+                });
+
+            modelBuilder.Entity("EventHandler.DAL.Entities.Event", b =>
+                {
+                    b.HasOne("EventHandler.DAL.Entities.EventStatus", "EventStatus")
+                        .WithMany("Events")
+                        .HasForeignKey("EventStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
