@@ -20,6 +20,8 @@ namespace EventHandler.Web
 {
     public class Startup
     {
+        private const string _eventHandlerUIOrigin = "eventHandlerUIOrigin";
+
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
@@ -41,6 +43,18 @@ namespace EventHandler.Web
                 options.UseNpgsql(Configuration.GetConnectionString("DataConnection"),
                     assembly => assembly.MigrationsAssembly(typeof(EventHandlerDbContext).Assembly.FullName));
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(_eventHandlerUIOrigin,
+                    builder =>
+                    {
+                        builder.WithOrigins(Configuration.GetSection("URL").GetSection("EventHandlerUI").Value)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
+
             services.AddLogging();
             services.AddControllers();
         }
@@ -57,7 +71,9 @@ namespace EventHandler.Web
                 app.UseDeveloperExceptionPage();
             }
 
+
             app.UseRouting();
+            app.UseCors(_eventHandlerUIOrigin);
             //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
