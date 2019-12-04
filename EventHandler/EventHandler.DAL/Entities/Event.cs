@@ -7,6 +7,7 @@ namespace EventHandler.DAL.Entities
         public long Id { get; set; }
         public string Description { get; set; }
         public string Applicant { get; set; }
+        public string ApplicantDepartment { get; set; }
         public DateTime ApplyDateTime { get; set; }
         public string Responsible { get; set; }
         public string Resolver { get; set; }

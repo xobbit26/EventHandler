@@ -33,6 +33,11 @@ namespace EventHandler.DAL.Migrations
                         .HasColumnType("character varying(250)")
                         .HasMaxLength(250);
 
+                    b.Property<string>("ApplicantDepartment")
+                        .HasColumnName("applicant_department")
+                        .HasColumnType("character varying(250)")
+                        .HasMaxLength(250);
+
                     b.Property<DateTime>("ApplyDateTime")
                         .HasColumnName("apply_date_time")
                         .HasColumnType("timestamp without time zone");

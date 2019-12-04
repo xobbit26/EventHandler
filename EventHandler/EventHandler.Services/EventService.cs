@@ -15,7 +15,8 @@ namespace EventHandler.Services
 
         private const string EVENT_NOT_FOUND_EXCEPTION = "event is null";
         private const string EVENT_STATUS_NOT_FOUND_EVCEPTION = "Event status with id {0} has not been found";
-        private const int PENDING_EVENT_STATUS_ID = 1;
+        private const string EVENT_NOT_SPECIFIED_EXCEPTION = "EventStatusId hasn't been specified";
+        private const long PENDING_EVENT_STATUS_ID = 1;
 
         public EventService(IEventRepository eventRepository, IEventStatusRepository eventStatusRepository)
         {
@@ -26,7 +27,7 @@ namespace EventHandler.Services
         public IEnumerable<EventDTO> GetEvents()
         {
             return _eventRepository.GetEvents()
-                .Select(s => MapEventEntityToDTO(s));
+                .Select(s => GetEventDTOFromEventEntity(s));
         }
 
         public EventDTO GetEvent(long id)
@@ -36,19 +37,13 @@ namespace EventHandler.Services
             if (eventEntity == null)
                 throw new ArgumentNullException(EVENT_NOT_FOUND_EXCEPTION);
 
-            return MapEventEntityToDTO(eventEntity);
+            return GetEventDTOFromEventEntity(eventEntity);
         }
 
         public void CreateEvent(EventDTO eventDTO)
         {
-            var eventEntity = new Event()
-            {
-                Description = eventDTO.Description,
-                Applicant = eventDTO.Applicant,
-                ApplyDateTime = DateTime.UtcNow,
-                Responsible = eventDTO.Responsible,
-                EventStatusId = PENDING_EVENT_STATUS_ID
-            };
+            var eventEntity = new Event();
+            MapEventDTOToEntity(eventDTO, eventEntity);
 
             _eventRepository.SaveEvent(eventEntity);
             _eventRepository.SaveChanges();
@@ -61,13 +56,15 @@ namespace EventHandler.Services
             if (eventEntityToUpdate == null)
                 throw new ArgumentNullException(EVENT_NOT_FOUND_EXCEPTION);
 
-            MapEventDTOToEntity(eventEntityToUpdate, eventDTO);
+            if (!eventDTO.EventStatusId.HasValue)
+                throw new ArgumentNullException(EVENT_NOT_SPECIFIED_EXCEPTION);
 
-            var eventStatus = _eventStatusRepository.GetEventStatus(eventDTO.StatusId);
+            MapEventDTOToEntity(eventDTO, eventEntityToUpdate);
+
+            var eventStatus = _eventStatusRepository.GetEventStatus(eventEntityToUpdate.EventStatusId);
             if (eventStatus == null)
-                throw new ArgumentNullException(string.Format(EVENT_STATUS_NOT_FOUND_EVCEPTION, eventDTO.StatusId));
+                throw new ArgumentNullException(string.Format(EVENT_STATUS_NOT_FOUND_EVCEPTION, eventDTO.EventStatusId));
 
-            eventEntityToUpdate.EventStatusId = eventDTO.StatusId;
             _eventRepository.SaveChanges();
         }
 
@@ -80,7 +77,7 @@ namespace EventHandler.Services
             _eventRepository.SaveChanges();
         }
 
-        private EventDTO MapEventEntityToDTO(Event eventEntity)
+        private EventDTO GetEventDTOFromEventEntity(Event eventEntity)
         {
             return new EventDTO()
             {
@@ -92,22 +89,22 @@ namespace EventHandler.Services
                 Resolver = eventEntity.Resolver,
                 ResolveDateTime = eventEntity.ResolveDateTime,
                 Notes = eventEntity.Notes,
-                StatusId = eventEntity.EventStatusId,
-                StatusName = eventEntity.EventStatus.SysName
+                EventStatusId = eventEntity.EventStatusId,
+                EventStatusName = eventEntity.EventStatus.SysName
             };
         }
 
-        private Event MapEventDTOToEntity(Event eventEntity, EventDTO eventDTO)
+        private void MapEventDTOToEntity(EventDTO eventDTO, Event eventEntity)
         {
             eventEntity.Description = eventDTO.Description;
             eventEntity.Applicant = eventDTO.Applicant;
-            eventEntity.ApplyDateTime = eventDTO.ApplyDateTime;
+            eventEntity.ApplicantDepartment = eventDTO.ApplicantDepartment;
+            eventEntity.ApplyDateTime = eventDTO.ApplyDateTime ?? DateTime.UtcNow;
             eventEntity.Responsible = eventDTO.Responsible;
             eventEntity.Resolver = eventDTO.Resolver;
             eventEntity.ResolveDateTime = eventDTO.ResolveDateTime;
             eventEntity.Notes = eventDTO.Notes;
-
-            return eventEntity;
+            eventEntity.EventStatusId = eventDTO.EventStatusId ?? PENDING_EVENT_STATUS_ID;
         }
     }
 }

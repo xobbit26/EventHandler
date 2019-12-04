@@ -30,6 +30,7 @@ namespace EventHandler.DAL.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     description = table.Column<string>(nullable: false),
                     applicant = table.Column<string>(maxLength: 250, nullable: false),
+                    applicant_department = table.Column<string>(maxLength: 250, nullable: true),
                     apply_date_time = table.Column<DateTime>(nullable: false),
                     responsible = table.Column<string>(maxLength: 250, nullable: true),
                     resolver = table.Column<string>(maxLength: 250, nullable: true),

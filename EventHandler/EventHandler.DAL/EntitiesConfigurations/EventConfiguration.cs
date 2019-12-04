@@ -25,6 +25,10 @@ namespace EventHandler.DAL.EntitiesConfigurations
                 .HasMaxLength(250)
                 .IsRequired();
 
+            builder.Property(x => x.ApplicantDepartment)
+                .HasColumnName("applicant_department")
+                .HasMaxLength(250);
+
             builder.Property(x => x.ApplyDateTime)
                 .HasColumnName("apply_date_time")
                 .IsRequired();
