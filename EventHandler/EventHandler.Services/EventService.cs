@@ -13,7 +13,7 @@ namespace EventHandler.Services
         private readonly IEventRepository _eventRepository;
         private readonly IEventStatusRepository _eventStatusRepository;
 
-        private const string EVENT_NOT_FOUND_EXCEPTION = "event is null";
+        private const string EVENT_NOT_FOUND_EXCEPTION = "Event is null";
         private const string EVENT_STATUS_NOT_FOUND_EVCEPTION = "Event status with id {0} has not been found";
         private const string EVENT_NOT_SPECIFIED_EXCEPTION = "EventStatusId hasn't been specified";
         private const long PENDING_EVENT_STATUS_ID = 1;
