@@ -1,4 +1,5 @@
-﻿using EventHandler.DAL.Entities;
+﻿using EventHandler.DAL;
+using EventHandler.DAL.Entities;
 using EventHandler.DAL.Interfaces;
 using EventHandler.DTO;
 using EventHandler.Services.Interfaces;
@@ -24,9 +25,9 @@ namespace EventHandler.Services
             _eventStatusRepository = eventStatusRepository;
         }
 
-        public IEnumerable<EventDTO> GetEvents()
+        public IEnumerable<EventDTO> GetEvents(PageOptions pageOptions)
         {
-            return _eventRepository.GetEvents()
+            return _eventRepository.GetEvents(pageOptions)
                 .Select(s => GetEventDTOFromEventEntity(s));
         }
 

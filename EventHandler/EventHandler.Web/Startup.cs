@@ -40,7 +40,8 @@ namespace EventHandler.Web
             //Configuring db context
             services.AddDbContext<EventHandlerDbContext>(options =>
             {
-                options.UseNpgsql(Configuration.GetConnectionString("DataConnection"),
+                options.UseNpgsql("Host=localhost;Port=5433;Database=EventHandlerData;Username=postgres;Password=admin",
+                    //Configuration.GetConnectionString("DataConnection"),
                     assembly => assembly.MigrationsAssembly(typeof(EventHandlerDbContext).Assembly.FullName));
             });
 

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using EventHandler.DAL;
 using EventHandler.DTO;
 using EventHandler.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +19,9 @@ namespace EventHandler.Web.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<EventDTO> Get()
+        public IEnumerable<EventDTO> Get([FromQuery] PageOptions pageOptions)
         {
-            return _eventService.GetEvents();
+            return _eventService.GetEvents(pageOptions);
         }
 
         [HttpGet("{id}", Name = "Get")]

@@ -1,8 +1,10 @@
 ﻿using EventHandler.DAL.Entities;
 using EventHandler.DAL.Interfaces;
+using EventHandler.DAL.Extentions;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+
 
 namespace EventHandler.DAL.Repositories
 {
@@ -15,12 +17,23 @@ namespace EventHandler.DAL.Repositories
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Event> GetEvents()
+        public IEnumerable<Event> GetEvents(PageOptions pageOptions)
         {
-            return _dbContext.Events
+            IQueryable<Event> query = _dbContext.Events
                 .Include(s => s.EventStatus)
-                .OrderBy(s => s.ApplyDateTime)
-                .Where(s => !s.IsDeleted);
+                .Where(s => !s.IsDeleted)
+                .AsQueryable();
+
+            query = pageOptions.IsSortable
+                    ? query.OrderBy(pageOptions.SortBy, pageOptions.Direction == SortDirection.Ascending)
+                    : query.OrderBy(s => s.ApplyDateTime);
+
+            if (pageOptions.IsPageable)
+                query = query.Skip(pageOptions.Skip).Take(pageOptions.Take);
+
+            return query
+                .AsNoTracking()
+                .AsEnumerable();
         }
 
         public Event GetEvent(long id)
