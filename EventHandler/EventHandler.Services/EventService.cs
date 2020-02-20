@@ -2,6 +2,7 @@
 using EventHandler.DAL.Entities;
 using EventHandler.DAL.Interfaces;
 using EventHandler.DTO;
+using EventHandler.DTO.Grid;
 using EventHandler.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,11 @@ namespace EventHandler.Services
         {
             return _eventRepository.GetEvents(pageOptions)
                 .Select(s => GetEventDTOFromEventEntity(s));
+        }
+
+        public GridDTO<EventDTO> GetEventsGridData(PageOptions pageOptions)
+        {
+            throw new NotImplementedException();
         }
 
         public EventDTO GetEvent(long id)
