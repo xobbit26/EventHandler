@@ -40,8 +40,7 @@ namespace EventHandler.Web
             //Configuring db context
             services.AddDbContext<EventHandlerDbContext>(options =>
             {
-                options.UseNpgsql("Host=localhost;Port=5433;Database=EventHandlerData;Username=postgres;Password=admin",
-                    //Configuration.GetConnectionString("DataConnection"),
+                options.UseNpgsql(Configuration.GetConnectionString("DataConnection"),
                     assembly => assembly.MigrationsAssembly(typeof(EventHandlerDbContext).Assembly.FullName));
             });
 
@@ -51,8 +50,8 @@ namespace EventHandler.Web
                     builder =>
                     {
                         builder.WithOrigins(Configuration.GetSection("URL").GetSection("EventHandlerUI").Value)
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
                     });
             });
 

@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EventHandler.DAL.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,17 +53,12 @@ namespace EventHandler.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "event_status",
                 columns: new[] { "id", "sys_name" },
-                values: new object[] { 1L, "pending" });
-
-            migrationBuilder.InsertData(
-                table: "event_status",
-                columns: new[] { "id", "sys_name" },
-                values: new object[] { 2L, "in_progress" });
-
-            migrationBuilder.InsertData(
-                table: "event_status",
-                columns: new[] { "id", "sys_name" },
-                values: new object[] { 3L, "done" });
+                values: new object[,]
+                {
+                    { 1L, "pending" },
+                    { 2L, "in_progress" },
+                    { 3L, "done" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_event_event_status_id",
