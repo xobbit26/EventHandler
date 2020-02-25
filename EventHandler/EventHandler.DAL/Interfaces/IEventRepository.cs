@@ -9,6 +9,7 @@ namespace EventHandler.DAL.Interfaces
         Event GetEvent(long id);
         void SaveEvent(Event eventItem);
         void DeleteEvent(Event eventItem);
+        long GetEventsCount();
         void SaveChanges();
     }
 }

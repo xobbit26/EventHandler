@@ -54,6 +54,13 @@ namespace EventHandler.DAL.Repositories
             _dbContext.Events.Remove(eventItem);
         }
 
+        public long GetEventsCount()
+        {
+            return _dbContext.Events
+                .Where(x => !x.IsDeleted)
+                .Count();
+        }
+
         public void SaveChanges()
         {
             _dbContext.SaveChanges();

@@ -8,7 +8,7 @@ namespace EventHandler.Services.Interfaces
     public interface IEventService
     {
         IEnumerable<EventDTO> GetEvents(PageOptions pageOptions);
-        GridDTO<EventDTO> GetEventsGridData(PageOptions pageOptions);
+        GridDTO<EventDTO> GetGridData(PageOptions pageOptions);
         EventDTO GetEvent(long id);
         void CreateEvent(EventDTO eventDTO);
         void UpdateEvent(long id, EventDTO eventDTO);

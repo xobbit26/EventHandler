@@ -2,6 +2,7 @@
 using System.Linq;
 using EventHandler.DAL;
 using EventHandler.DTO;
+using EventHandler.DTO.Grid;
 using EventHandler.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,13 @@ namespace EventHandler.Web.Controllers
         public IEnumerable<EventDTO> Get([FromQuery] PageOptions pageOptions)
         {
             return _eventService.GetEvents(pageOptions);
+        }
+
+        [HttpGet]
+        [Route("grid-data")]
+        public GridDTO<EventDTO> GetGridData([FromQuery] PageOptions pageOptions)
+        {
+            return _eventService.GetGridData(pageOptions);
         }
 
         [HttpGet("{id}", Name = "Get")]

@@ -4,6 +4,8 @@ using EventHandler.DAL.Interfaces;
 using EventHandler.DTO;
 using EventHandler.DTO.Grid;
 using EventHandler.Services.Interfaces;
+using EventHandler.Services.Processors;
+using EventHandler.Services.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,12 +31,13 @@ namespace EventHandler.Services
         public IEnumerable<EventDTO> GetEvents(PageOptions pageOptions)
         {
             return _eventRepository.GetEvents(pageOptions)
-                .Select(s => GetEventDTOFromEventEntity(s));
+                .Select(s => MapUtils.GetEventDTOFromEventEntity(s));
         }
 
-        public GridDTO<EventDTO> GetEventsGridData(PageOptions pageOptions)
+        public GridDTO<EventDTO> GetGridData(PageOptions pageOptions)
         {
-            throw new NotImplementedException();
+            var eventGridDataProcessor = new EventGridDataProcessor(_eventRepository);
+            return eventGridDataProcessor.GetGridData(pageOptions);
         }
 
         public EventDTO GetEvent(long id)
@@ -44,7 +47,7 @@ namespace EventHandler.Services
             if (eventEntity == null)
                 throw new ArgumentNullException(EVENT_NOT_FOUND_EXCEPTION);
 
-            return GetEventDTOFromEventEntity(eventEntity);
+            return MapUtils.GetEventDTOFromEventEntity(eventEntity);
         }
 
         public void CreateEvent(EventDTO eventDTO)
@@ -82,23 +85,6 @@ namespace EventHandler.Services
 
             _eventRepository.DeleteEvent(eventEntityToDelete);
             _eventRepository.SaveChanges();
-        }
-
-        private EventDTO GetEventDTOFromEventEntity(Event eventEntity)
-        {
-            return new EventDTO()
-            {
-                Id = eventEntity.Id,
-                Description = eventEntity.Description,
-                Applicant = eventEntity.Applicant,
-                ApplyDateTime = eventEntity.ApplyDateTime,
-                Responsible = eventEntity.Responsible,
-                Resolver = eventEntity.Resolver,
-                ResolveDateTime = eventEntity.ResolveDateTime,
-                Notes = eventEntity.Notes,
-                EventStatusId = eventEntity.EventStatusId,
-                EventStatusName = eventEntity.EventStatus.SysName
-            };
         }
 
         private void MapEventDTOToEntity(EventDTO eventDTO, Event eventEntity)
