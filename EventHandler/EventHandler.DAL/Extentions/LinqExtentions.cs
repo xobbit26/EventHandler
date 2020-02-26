@@ -13,10 +13,10 @@ namespace EventHandler.DAL.Extentions
             var parameter = Expression.Parameter(type, "p");
             PropertyInfo property;
             Expression propertyAccess;
-            if (ordering.Contains('.'))
+            if (ordering.Contains(','))
             {
                 // support to be sorted on child fields.
-                String[] childProperties = ordering.Split('.');
+                String[] childProperties = ordering.Split(',');
                 property = type.GetProperty(childProperties[0]);
                 propertyAccess = Expression.MakeMemberAccess(parameter, property);
                 for (int i = 1; i < childProperties.Length; i++)
@@ -27,7 +27,7 @@ namespace EventHandler.DAL.Extentions
             }
             else
             {
-                property = typeof(T).GetProperty(ordering);
+                property = typeof(T).GetProperty(ordering, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                 propertyAccess = Expression.MakeMemberAccess(parameter, property);
             }
             var orderByExp = Expression.Lambda(propertyAccess, parameter);
@@ -35,8 +35,8 @@ namespace EventHandler.DAL.Extentions
                                                              ascending ? "OrderBy" : "OrderByDescending",
                                                              new[] { type, property.PropertyType }, source.Expression,
                                                              Expression.Quote(orderByExp));
-            return source.OrderBy(x => orderByExp);
-            //return source.Provider.CreateQuery<T>(resultExp);
+            //return source.OrderBy(x => orderByExp);
+            return source.Provider.CreateQuery<T>(resultExp);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace EventHandler.Services.Processors
             columns.Add(new GridColumn("applyDateTime", "applyDateTime", "Дата и время подачи", ColumnTypeEnum.DateTime, false));
             columns.Add(new GridColumn("description", "description", "Описание", ColumnTypeEnum.String, false));
             columns.Add(new GridColumn("responsible", "responsible", "Ответственный", ColumnTypeEnum.String, false));
-            columns.Add(new GridColumn("eventStatusName", "eventStatusName", "Статус", ColumnTypeEnum.String, false));
+            columns.Add(new GridColumn("eventStatusName", "eventStatus", "Статус", ColumnTypeEnum.String, false));
             columns.Add(new GridColumn("resolveDateTime", "resolveDateTime", "Дата и время выполнения", ColumnTypeEnum.String, false));
 
             return columns;

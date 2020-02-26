@@ -25,7 +25,7 @@ namespace EventHandler.DAL.Repositories
                 .AsQueryable();
 
             query = pageOptions.IsSortable
-                    ? query.OrderBy(pageOptions.SortBy, pageOptions.Direction == SortDirection.Ascending)
+                    ? query.OrderBy(pageOptions.OrderBy, pageOptions.Direction == SortDirection.Ascending)
                     : query.OrderBy(s => s.ApplyDateTime);
 
             if (pageOptions.IsPageable)
