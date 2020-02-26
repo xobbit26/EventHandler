@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EventHandler.DAL.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,6 +20,19 @@ namespace EventHandler.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_event_status", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "resource",
+                columns: table => new
+                {
+                    id = table.Column<string>(nullable: false),
+                    locale = table.Column<string>(nullable: false),
+                    text = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_resource", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,6 +73,30 @@ namespace EventHandler.DAL.Migrations
                     { 3L, "done" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "resource",
+                columns: new[] { "id", "locale", "text" },
+                values: new object[,]
+                {
+                    { "CreateEvent_Department_Label", "EN", "Department" },
+                    { "CreateEvent_FullName_Label", "EN", "FullName" },
+                    { "EventsTable_Header_ResolveDateTime", "EN", "Resolving Date Time" },
+                    { "EventsTable_Header_Status", "EN", "Status" },
+                    { "EventsTable_Header_Responsible", "EN", "Responsible" },
+                    { "EventsTable_Header_Description", "EN", "Description" },
+                    { "EventsTable_Header_ApplyDateTime", "EN", "Date Time" },
+                    { "AppBar_Reports_Settings", "EN", "Settings" },
+                    { "CreateEvent_Description_Label", "EN", "Description" },
+                    { "AppBar_Reports_Administration", "EN", "Administration" },
+                    { "AppBar_Reports_Label", "EN", "Reports" },
+                    { "AppBar_Event_List_Label", "EN", "Event List" },
+                    { "AppBar_Create_Event_Label", "EN", "Create Event" },
+                    { "AppBar_Login_Label", "EN", "Login" },
+                    { "AppName_Label", "EN", "EventHandler" },
+                    { "EventsTable_Header_FullName", "EN", "FullName" },
+                    { "CreateEvent_Submit_Button_Label", "EN", "Submit" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_event_event_status_id",
                 table: "event",
@@ -74,12 +111,21 @@ namespace EventHandler.DAL.Migrations
                 name: "IX_event_status_id",
                 table: "event_status",
                 column: "id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_resource_id_locale",
+                table: "resource",
+                columns: new[] { "id", "locale" },
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "event");
+
+            migrationBuilder.DropTable(
+                name: "resource");
 
             migrationBuilder.DropTable(
                 name: "event_status");

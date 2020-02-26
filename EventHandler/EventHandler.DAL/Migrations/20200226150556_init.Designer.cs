@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventHandler.DAL.Migrations
 {
     [DbContext(typeof(EventHandlerDbContext))]
-    [Migration("20200221194452_Init")]
-    partial class Init
+    [Migration("20200226150556_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,6 +129,134 @@ namespace EventHandler.DAL.Migrations
                             Id = 3L,
                             IsDeleted = false,
                             SysName = "done"
+                        });
+                });
+
+            modelBuilder.Entity("EventHandler.DAL.Entities.Resource", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnName("id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Locale")
+                        .IsRequired()
+                        .HasColumnName("locale")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnName("text")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id", "Locale")
+                        .IsUnique();
+
+                    b.ToTable("resource");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "AppName_Label",
+                            Locale = "EN",
+                            Text = "EventHandler"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Login_Label",
+                            Locale = "EN",
+                            Text = "Login"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Create_Event_Label",
+                            Locale = "EN",
+                            Text = "Create Event"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Event_List_Label",
+                            Locale = "EN",
+                            Text = "Event List"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Reports_Label",
+                            Locale = "EN",
+                            Text = "Reports"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Reports_Administration",
+                            Locale = "EN",
+                            Text = "Administration"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Reports_Settings",
+                            Locale = "EN",
+                            Text = "Settings"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_FullName",
+                            Locale = "EN",
+                            Text = "FullName"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_ApplyDateTime",
+                            Locale = "EN",
+                            Text = "Date Time"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_Description",
+                            Locale = "EN",
+                            Text = "Description"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_Responsible",
+                            Locale = "EN",
+                            Text = "Responsible"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_Status",
+                            Locale = "EN",
+                            Text = "Status"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_ResolveDateTime",
+                            Locale = "EN",
+                            Text = "Resolving Date Time"
+                        },
+                        new
+                        {
+                            Id = "CreateEvent_FullName_Label",
+                            Locale = "EN",
+                            Text = "FullName"
+                        },
+                        new
+                        {
+                            Id = "CreateEvent_Department_Label",
+                            Locale = "EN",
+                            Text = "Department"
+                        },
+                        new
+                        {
+                            Id = "CreateEvent_Description_Label",
+                            Locale = "EN",
+                            Text = "Description"
+                        },
+                        new
+                        {
+                            Id = "CreateEvent_Submit_Button_Label",
+                            Locale = "EN",
+                            Text = "Submit"
                         });
                 });
 

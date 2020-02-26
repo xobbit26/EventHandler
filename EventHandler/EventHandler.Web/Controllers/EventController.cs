@@ -19,11 +19,11 @@ namespace EventHandler.Web.Controllers
             _eventService = eventService;
         }
 
-        [HttpGet]
-        public IEnumerable<EventDTO> Get([FromQuery] PageOptions pageOptions)
-        {
-            return _eventService.GetEvents(pageOptions);
-        }
+        //[HttpGet]
+        //public IEnumerable<EventDTO> Get([FromQuery] PageOptions pageOptions)
+        //{
+        //    return _eventService.GetEvents(pageOptions);
+        //}
 
         [HttpGet]
         [Route("grid-data")]
@@ -32,11 +32,11 @@ namespace EventHandler.Web.Controllers
             return _eventService.GetGridData(pageOptions);
         }
 
-        [HttpGet("{id}", Name = "Get")]
-        public EventDTO Get(long id)
-        {
-            return _eventService.GetEvent(id);
-        }
+        //[HttpGet("{id}", Name = "Get")]
+        //public EventDTO Get(long id)
+        //{
+        //    return _eventService.GetEvent(id);
+        //}
 
         [HttpPost]
         public void Post([FromBody] EventDTO eventDTO)
@@ -44,16 +44,16 @@ namespace EventHandler.Web.Controllers
             _eventService.CreateEvent(eventDTO);
         }
 
-        [HttpPut("{id}")]
-        public void Put(long id, [FromBody] EventDTO eventDTO)
-        {
-            _eventService.UpdateEvent(id, eventDTO);
-        }
+        //[HttpPut("{id}")]
+        //public void Put(long id, [FromBody] EventDTO eventDTO)
+        //{
+        //    _eventService.UpdateEvent(id, eventDTO);
+        //}
 
-        [HttpDelete("{id}")]
-        public void Delete(long id)
-        {
-            _eventService.DeleteEvent(id);
-        }
+        //[HttpDelete("{id}")]
+        //public void Delete(long id)
+        //{
+        //    _eventService.DeleteEvent(id);
+        //}
     }
 }
