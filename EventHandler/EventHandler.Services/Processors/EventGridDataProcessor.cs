@@ -1,6 +1,7 @@
 ﻿using EventHandler.DAL;
 using EventHandler.DAL.Interfaces;
 using EventHandler.DTO;
+using EventHandler.DTO.Enums;
 using EventHandler.DTO.Grid;
 using EventHandler.Services.Utils;
 using System.Collections.Generic;
@@ -44,12 +45,12 @@ namespace EventHandler.Services.Processors
         {
             var columns = new List<GridColumn>();
 
-            columns.Add(new GridColumn("applicant", "applicant", "ФИО подавшего заявку", false));
-            columns.Add(new GridColumn("applyDateTime", "applyDateTime", "Дата и время подачи", false));
-            columns.Add(new GridColumn("description", "description", "Описание", false));
-            columns.Add(new GridColumn("responsible", "responsible", "Ответственный", false));
-            columns.Add(new GridColumn("eventStatusName", "eventStatusName", "Статус", false));
-            columns.Add(new GridColumn("resolveDateTime", "resolveDateTime", "Дата и время выполнения", false));
+            columns.Add(new GridColumn("applicant", "applicant", "ФИО подавшего заявку", ColumnTypeEnum.String, false));
+            columns.Add(new GridColumn("applyDateTime", "applyDateTime", "Дата и время подачи", ColumnTypeEnum.DateTime, false));
+            columns.Add(new GridColumn("description", "description", "Описание", ColumnTypeEnum.String, false));
+            columns.Add(new GridColumn("responsible", "responsible", "Ответственный", ColumnTypeEnum.String, false));
+            columns.Add(new GridColumn("eventStatusName", "eventStatusName", "Статус", ColumnTypeEnum.String, false));
+            columns.Add(new GridColumn("resolveDateTime", "resolveDateTime", "Дата и время выполнения", ColumnTypeEnum.String, false));
 
             return columns;
         }

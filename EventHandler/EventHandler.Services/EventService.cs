@@ -20,7 +20,6 @@ namespace EventHandler.Services
         private const string EVENT_NOT_FOUND_EXCEPTION = "Event is null";
         private const string EVENT_STATUS_NOT_FOUND_EVCEPTION = "Event status with id {0} has not been found";
         private const string EVENT_NOT_SPECIFIED_EXCEPTION = "EventStatusId hasn't been specified";
-        private const long PENDING_EVENT_STATUS_ID = 1;
 
         public EventService(IEventRepository eventRepository, IEventStatusRepository eventStatusRepository)
         {
@@ -53,7 +52,7 @@ namespace EventHandler.Services
         public void CreateEvent(EventDTO eventDTO)
         {
             var eventEntity = new Event();
-            MapEventDTOToEntity(eventDTO, eventEntity);
+            MapUtils.MapEventDTOToEntity(eventDTO, eventEntity);
 
             _eventRepository.SaveEvent(eventEntity);
             _eventRepository.SaveChanges();
@@ -69,7 +68,7 @@ namespace EventHandler.Services
             if (!eventDTO.EventStatusId.HasValue)
                 throw new ArgumentNullException(EVENT_NOT_SPECIFIED_EXCEPTION);
 
-            MapEventDTOToEntity(eventDTO, eventEntityToUpdate);
+            MapUtils.MapEventDTOToEntity(eventDTO, eventEntityToUpdate);
 
             var eventStatus = _eventStatusRepository.GetEventStatus(eventEntityToUpdate.EventStatusId);
             if (eventStatus == null)
@@ -85,19 +84,6 @@ namespace EventHandler.Services
 
             _eventRepository.DeleteEvent(eventEntityToDelete);
             _eventRepository.SaveChanges();
-        }
-
-        private void MapEventDTOToEntity(EventDTO eventDTO, Event eventEntity)
-        {
-            eventEntity.Description = eventDTO.Description;
-            eventEntity.Applicant = eventDTO.Applicant;
-            eventEntity.ApplicantDepartment = eventDTO.ApplicantDepartment;
-            eventEntity.ApplyDateTime = eventDTO.ApplyDateTime ?? DateTime.UtcNow;
-            eventEntity.Responsible = eventDTO.Responsible;
-            eventEntity.Resolver = eventDTO.Resolver;
-            eventEntity.ResolveDateTime = eventDTO.ResolveDateTime;
-            eventEntity.Notes = eventDTO.Notes;
-            eventEntity.EventStatusId = eventDTO.EventStatusId ?? PENDING_EVENT_STATUS_ID;
         }
     }
 }
