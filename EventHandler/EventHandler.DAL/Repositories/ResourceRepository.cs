@@ -19,7 +19,7 @@ namespace EventHandler.DAL.Repositories
         {
             return _dbContext
                 .Resources
-                .Where(s => s.Locale == locale);
+                .Where(s => s.Locale == locale.ToUpperInvariant());
         }
 
         public Resource GetResourcesByIds(IEnumerable<string> ids, string locale)

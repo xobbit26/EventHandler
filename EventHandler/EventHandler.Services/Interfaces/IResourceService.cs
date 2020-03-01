@@ -5,7 +5,7 @@ namespace EventHandler.Services.Interfaces
 {
     public interface IResourceService
     {
-        IEnumerable<ResourceDTO> GetResources(string locale);
+        Dictionary<string, string> GetResources(string locale);
         ResourceDTO GetResourcesByIds(IEnumerable<string> ids, string locale);
     }
 }

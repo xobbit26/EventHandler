@@ -16,10 +16,10 @@ namespace EventHandler.Services
             _resourceRepository = resourceRepository;
         }
 
-        public IEnumerable<ResourceDTO> GetResources(string locale)
+        public Dictionary<string, string> GetResources(string locale)
         {
             return _resourceRepository.GetResources(locale)
-                .Select(x=> new ResourceDTO(x.Id, x.Locale, x.Text));
+                .ToDictionary(k => k.Id, v => v.Text);
         }
 
         public ResourceDTO GetResourcesByIds(IEnumerable<string> ids, string locale)

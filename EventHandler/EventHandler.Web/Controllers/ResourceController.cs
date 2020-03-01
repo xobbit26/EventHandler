@@ -17,9 +17,10 @@ namespace EventHandler.Web.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ResourceDTO> Get(string locale)
+        [Route("{lang}/translations.json")]
+        public Dictionary<string, string> Get(string lang)
         {
-            return _resourceService.GetResources(locale);
+            return _resourceService.GetResources(lang);
         }
     }
 }
