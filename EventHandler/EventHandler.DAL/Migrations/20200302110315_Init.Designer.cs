@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventHandler.DAL.Migrations
 {
     [DbContext(typeof(EventHandlerDbContext))]
-    [Migration("20200226150556_init")]
-    partial class init
+    [Migration("20200302110315_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -139,7 +139,6 @@ namespace EventHandler.DAL.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Locale")
-                        .IsRequired()
                         .HasColumnName("locale")
                         .HasColumnType("text");
 
@@ -148,7 +147,7 @@ namespace EventHandler.DAL.Migrations
                         .HasColumnName("text")
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "Locale");
 
                     b.HasIndex("Id", "Locale")
                         .IsUnique();
@@ -160,7 +159,7 @@ namespace EventHandler.DAL.Migrations
                         {
                             Id = "AppName_Label",
                             Locale = "EN",
-                            Text = "EventHandler"
+                            Text = "Event Handler"
                         },
                         new
                         {
@@ -238,7 +237,7 @@ namespace EventHandler.DAL.Migrations
                         {
                             Id = "CreateEvent_FullName_Label",
                             Locale = "EN",
-                            Text = "FullName"
+                            Text = "Full Name"
                         },
                         new
                         {
@@ -257,6 +256,144 @@ namespace EventHandler.DAL.Migrations
                             Id = "CreateEvent_Submit_Button_Label",
                             Locale = "EN",
                             Text = "Submit"
+                        },
+                        new
+                        {
+                            Id = "LoginPage_Login_Label",
+                            Locale = "EN",
+                            Text = "Login"
+                        },
+                        new
+                        {
+                            Id = "LoginPage_Password_Label",
+                            Locale = "EN",
+                            Text = "Password"
+                        },
+                        new
+                        {
+                            Id = "LoginPage_Enter_Label",
+                            Locale = "EN",
+                            Text = "Enter"
+                        },
+                        new
+                        {
+                            Id = "AppName_Label",
+                            Locale = "RU",
+                            Text = "Event Handler"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Login_Label",
+                            Locale = "RU",
+                            Text = "Логин"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Create_Event_Label",
+                            Locale = "RU",
+                            Text = "Создать заявку"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Event_List_Label",
+                            Locale = "RU",
+                            Text = "Список заявок"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Reports_Label",
+                            Locale = "RU",
+                            Text = "Отчеты"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Reports_Administration",
+                            Locale = "RU",
+                            Text = "Управление"
+                        },
+                        new
+                        {
+                            Id = "AppBar_Reports_Settings",
+                            Locale = "RU",
+                            Text = "Настройки"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_FullName",
+                            Locale = "RU",
+                            Text = "ФИО подавшего заявку"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_ApplyDateTime",
+                            Locale = "RU",
+                            Text = "Дата и время подачи"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_Description",
+                            Locale = "RU",
+                            Text = "Описание"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_Responsible",
+                            Locale = "RU",
+                            Text = "Ответственный"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_Status",
+                            Locale = "RU",
+                            Text = "Статус"
+                        },
+                        new
+                        {
+                            Id = "EventsTable_Header_ResolveDateTime",
+                            Locale = "RU",
+                            Text = "Дата и время выполнения"
+                        },
+                        new
+                        {
+                            Id = "CreateEvent_FullName_Label",
+                            Locale = "RU",
+                            Text = "ФИО"
+                        },
+                        new
+                        {
+                            Id = "CreateEvent_Department_Label",
+                            Locale = "RU",
+                            Text = "Отдел"
+                        },
+                        new
+                        {
+                            Id = "CreateEvent_Description_Label",
+                            Locale = "RU",
+                            Text = "Описание"
+                        },
+                        new
+                        {
+                            Id = "CreateEvent_Submit_Button_Label",
+                            Locale = "RU",
+                            Text = "Отправить"
+                        },
+                        new
+                        {
+                            Id = "LoginPage_Login_Label",
+                            Locale = "RU",
+                            Text = "Логин"
+                        },
+                        new
+                        {
+                            Id = "LoginPage_Password_Label",
+                            Locale = "RU",
+                            Text = "Пароль"
+                        },
+                        new
+                        {
+                            Id = "LoginPage_Enter_Label",
+                            Locale = "RU",
+                            Text = "Войти"
                         });
                 });
 

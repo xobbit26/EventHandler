@@ -10,7 +10,7 @@ namespace EventHandler.DAL.EntitiesConfigurations
         {
             builder.ToTable("resource");
 
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => new { x.Id, x.Locale });
             builder.HasIndex(x => new { x.Id, x.Locale })
                 .IsUnique();
 

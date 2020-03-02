@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EventHandler.DAL.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,7 +32,7 @@ namespace EventHandler.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_resource", x => x.id);
+                    table.PrimaryKey("PK_resource", x => new { x.id, x.locale });
                 });
 
             migrationBuilder.CreateTable(
@@ -78,23 +78,46 @@ namespace EventHandler.DAL.Migrations
                 columns: new[] { "id", "locale", "text" },
                 values: new object[,]
                 {
-                    { "CreateEvent_Department_Label", "EN", "Department" },
-                    { "CreateEvent_FullName_Label", "EN", "FullName" },
-                    { "EventsTable_Header_ResolveDateTime", "EN", "Resolving Date Time" },
-                    { "EventsTable_Header_Status", "EN", "Status" },
-                    { "EventsTable_Header_Responsible", "EN", "Responsible" },
-                    { "EventsTable_Header_Description", "EN", "Description" },
-                    { "EventsTable_Header_ApplyDateTime", "EN", "Date Time" },
-                    { "AppBar_Reports_Settings", "EN", "Settings" },
-                    { "CreateEvent_Description_Label", "EN", "Description" },
-                    { "AppBar_Reports_Administration", "EN", "Administration" },
-                    { "AppBar_Reports_Label", "EN", "Reports" },
-                    { "AppBar_Event_List_Label", "EN", "Event List" },
-                    { "AppBar_Create_Event_Label", "EN", "Create Event" },
+                    { "AppBar_Login_Label", "RU", "Логин" },
+                    { "AppBar_Create_Event_Label", "RU", "Создать заявку" },
+                    { "AppBar_Event_List_Label", "RU", "Список заявок" },
+                    { "AppBar_Reports_Label", "RU", "Отчеты" },
+                    { "AppBar_Reports_Administration", "RU", "Управление" },
+                    { "AppBar_Reports_Settings", "RU", "Настройки" },
+                    { "EventsTable_Header_FullName", "RU", "ФИО подавшего заявку" },
+                    { "EventsTable_Header_ApplyDateTime", "RU", "Дата и время подачи" },
+                    { "EventsTable_Header_Responsible", "RU", "Ответственный" },
+                    { "AppName_Label", "RU", "Event Handler" },
+                    { "EventsTable_Header_Status", "RU", "Статус" },
+                    { "EventsTable_Header_ResolveDateTime", "RU", "Дата и время выполнения" },
+                    { "CreateEvent_FullName_Label", "RU", "ФИО" },
+                    { "CreateEvent_Department_Label", "RU", "Отдел" },
+                    { "CreateEvent_Description_Label", "RU", "Описание" },
+                    { "CreateEvent_Submit_Button_Label", "RU", "Отправить" },
+                    { "LoginPage_Login_Label", "RU", "Логин" },
+                    { "EventsTable_Header_Description", "RU", "Описание" },
+                    { "LoginPage_Enter_Label", "EN", "Enter" },
+                    { "LoginPage_Password_Label", "EN", "Password" },
+                    { "LoginPage_Login_Label", "EN", "Login" },
+                    { "AppName_Label", "EN", "Event Handler" },
                     { "AppBar_Login_Label", "EN", "Login" },
-                    { "AppName_Label", "EN", "EventHandler" },
+                    { "AppBar_Create_Event_Label", "EN", "Create Event" },
+                    { "AppBar_Event_List_Label", "EN", "Event List" },
+                    { "AppBar_Reports_Label", "EN", "Reports" },
+                    { "AppBar_Reports_Administration", "EN", "Administration" },
+                    { "AppBar_Reports_Settings", "EN", "Settings" },
                     { "EventsTable_Header_FullName", "EN", "FullName" },
-                    { "CreateEvent_Submit_Button_Label", "EN", "Submit" }
+                    { "EventsTable_Header_ApplyDateTime", "EN", "Date Time" },
+                    { "EventsTable_Header_Description", "EN", "Description" },
+                    { "EventsTable_Header_Responsible", "EN", "Responsible" },
+                    { "EventsTable_Header_Status", "EN", "Status" },
+                    { "EventsTable_Header_ResolveDateTime", "EN", "Resolving Date Time" },
+                    { "CreateEvent_FullName_Label", "EN", "Full Name" },
+                    { "CreateEvent_Department_Label", "EN", "Department" },
+                    { "CreateEvent_Description_Label", "EN", "Description" },
+                    { "CreateEvent_Submit_Button_Label", "EN", "Submit" },
+                    { "LoginPage_Password_Label", "RU", "Пароль" },
+                    { "LoginPage_Enter_Label", "RU", "Войти" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -3,6 +3,7 @@ using EventHandler.DAL.Interfaces;
 using EventHandler.DTO;
 using EventHandler.DTO.Enums;
 using EventHandler.DTO.Grid;
+using EventHandler.Services.Interfaces;
 using EventHandler.Services.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,19 @@ namespace EventHandler.Services.Processors
 {
     internal class EventGridDataProcessor
     {
-        private IEventRepository _eventRepository;
+        private const string _defaultLocale = "EN";
+        private readonly string _locale;
 
-        internal EventGridDataProcessor(IEventRepository eventRepository)
+        private readonly IEventRepository _eventRepository;
+        private readonly IResourceService _resourceService;
+
+        internal EventGridDataProcessor(IEventRepository eventRepository,
+            IResourceService resourceService,
+            string locale = _defaultLocale)
         {
             _eventRepository = eventRepository;
+            _resourceService = resourceService;
+            _locale = locale;
         }
 
         internal GridDTO<EventDTO> GetGridData(PageOptions pageOptions)
@@ -45,12 +54,18 @@ namespace EventHandler.Services.Processors
         {
             var columns = new List<GridColumn>();
 
-            columns.Add(new GridColumn("applicant", "applicant", "ФИО подавшего заявку", ColumnTypeEnum.String, false));
-            columns.Add(new GridColumn("applyDateTime", "applyDateTime", "Дата и время подачи", ColumnTypeEnum.DateTime, false));
-            columns.Add(new GridColumn("description", "description", "Описание", ColumnTypeEnum.String, false));
-            columns.Add(new GridColumn("responsible", "responsible", "Ответственный", ColumnTypeEnum.String, false));
-            columns.Add(new GridColumn("eventStatusName", "eventStatus", "Статус", ColumnTypeEnum.String, false));
-            columns.Add(new GridColumn("resolveDateTime", "resolveDateTime", "Дата и время выполнения", ColumnTypeEnum.String, false));
+            columns.Add(new GridColumn("applicant", "applicant",
+                _resourceService.GetTranslation(LocalizeKeysEnum.EventsTable_Header_FullName, _locale), ColumnTypeEnum.String, false));
+            columns.Add(new GridColumn("applyDateTime", "applyDateTime",
+                _resourceService.GetTranslation(LocalizeKeysEnum.EventsTable_Header_ApplyDateTime, _locale), ColumnTypeEnum.DateTime, false));
+            columns.Add(new GridColumn("description", "description",
+                _resourceService.GetTranslation(LocalizeKeysEnum.EventsTable_Header_Description, _locale), ColumnTypeEnum.String, false));
+            columns.Add(new GridColumn("responsible", "responsible",
+                _resourceService.GetTranslation(LocalizeKeysEnum.EventsTable_Header_Responsible, _locale), ColumnTypeEnum.String, false));
+            columns.Add(new GridColumn("eventStatusName", "eventStatus",
+                _resourceService.GetTranslation(LocalizeKeysEnum.EventsTable_Header_Status, _locale), ColumnTypeEnum.String, false));
+            columns.Add(new GridColumn("resolveDateTime", "resolveDateTime",
+                _resourceService.GetTranslation(LocalizeKeysEnum.EventsTable_Header_ResolveDateTime, _locale), ColumnTypeEnum.String, false));
 
             return columns;
         }

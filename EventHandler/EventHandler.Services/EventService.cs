@@ -16,15 +16,20 @@ namespace EventHandler.Services
     {
         private readonly IEventRepository _eventRepository;
         private readonly IEventStatusRepository _eventStatusRepository;
+        private IResourceService _resourceService;
 
+        
         private const string EVENT_NOT_FOUND_EXCEPTION = "Event is null";
         private const string EVENT_STATUS_NOT_FOUND_EVCEPTION = "Event status with id {0} has not been found";
         private const string EVENT_NOT_SPECIFIED_EXCEPTION = "EventStatusId hasn't been specified";
 
-        public EventService(IEventRepository eventRepository, IEventStatusRepository eventStatusRepository)
+        public EventService(IEventRepository eventRepository,
+            IEventStatusRepository eventStatusRepository,
+            IResourceService resourceService)
         {
             _eventRepository = eventRepository;
             _eventStatusRepository = eventStatusRepository;
+            _resourceService = resourceService;
         }
 
         public IEnumerable<EventDTO> GetEvents(PageOptions pageOptions)
@@ -33,9 +38,9 @@ namespace EventHandler.Services
                 .Select(s => MapUtils.GetEventDTOFromEventEntity(s));
         }
 
-        public GridDTO<EventDTO> GetGridData(PageOptions pageOptions)
+        public GridDTO<EventDTO> GetGridData(PageOptions pageOptions, string locale)
         {
-            var eventGridDataProcessor = new EventGridDataProcessor(_eventRepository);
+            var eventGridDataProcessor = new EventGridDataProcessor(_eventRepository, _resourceService, locale);
             return eventGridDataProcessor.GetGridData(pageOptions);
         }
 

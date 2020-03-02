@@ -26,10 +26,10 @@ namespace EventHandler.Web.Controllers
         //}
 
         [HttpGet]
-        [Route("grid-data")]
-        public GridDTO<EventDTO> GetGridData([FromQuery] PageOptions pageOptions)
+        [Route("grid-data/{locale}")]
+        public GridDTO<EventDTO> GetGridData([FromQuery] PageOptions pageOptions, string locale)
         {
-            return _eventService.GetGridData(pageOptions);
+            return _eventService.GetGridData(pageOptions, locale);
         }
 
         //[HttpGet("{id}", Name = "Get")]
