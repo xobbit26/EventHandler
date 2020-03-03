@@ -37,6 +37,8 @@ namespace EventHandler.DAL.InitialData
             modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "LoginPage_Login_Label", Locale = "EN", Text = "Login" });
             modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "LoginPage_Password_Label", Locale = "EN", Text = "Password" });
             modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "LoginPage_Enter_Label", Locale = "EN", Text = "Enter" });
+
+            modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "SuccessMessage_EventCreated", Locale = "EN", Text = "Event Successfully Created!" });
         }
 
         private static void InitRussianResources(ModelBuilder modelBuilder)
@@ -64,6 +66,8 @@ namespace EventHandler.DAL.InitialData
             modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "LoginPage_Login_Label", Locale = "RU", Text = "Логин" });
             modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "LoginPage_Password_Label", Locale = "RU", Text = "Пароль" });
             modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "LoginPage_Enter_Label", Locale = "RU", Text = "Войти" });
+
+            modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "SuccessMessage_EventCreated", Locale = "RU", Text = "Заявка успешно создана!" });
         }
     }
 }
