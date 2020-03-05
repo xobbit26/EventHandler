@@ -39,6 +39,7 @@ namespace EventHandler.DAL.InitialData
             modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "LoginPage_Enter_Label", Locale = "EN", Text = "Enter" });
 
             modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "SuccessMessage_EventCreated", Locale = "EN", Text = "Event Successfully Created!" });
+            modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "ErrorMessage_InternalServer", Locale = "EN", Text = "Internal Server Error!" });
         }
 
         private static void InitRussianResources(ModelBuilder modelBuilder)
@@ -68,6 +69,7 @@ namespace EventHandler.DAL.InitialData
             modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "LoginPage_Enter_Label", Locale = "RU", Text = "Войти" });
 
             modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "SuccessMessage_EventCreated", Locale = "RU", Text = "Заявка успешно создана!" });
+            modelBuilder.Entity<Resource>().HasData(new Resource() { Id = "ErrorMessage_InternalServer", Locale = "RU", Text = "Внутренняя ошибка сервера!" });
         }
     }
 }

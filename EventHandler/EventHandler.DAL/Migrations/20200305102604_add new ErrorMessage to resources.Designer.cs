@@ -3,15 +3,17 @@ using System;
 using EventHandler.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EventHandler.DAL.Migrations
 {
     [DbContext(typeof(EventHandlerDbContext))]
-    partial class EventHandlerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200305102604_add new ErrorMessage to resources")]
+    partial class addnewErrorMessagetoresources
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

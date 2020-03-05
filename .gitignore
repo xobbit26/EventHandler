@@ -13,3 +13,4 @@ EventHandler/EventHandler.DTO/bin/
 EventHandler/EventHandler.Services/bin/
 EventHandler/EventHandler.Services/EventHandler.Services.csproj.user
 EventHandler/EventHandler.Web/Log
+EventHandler/Log/
