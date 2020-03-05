@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EventHandler.DTO;
 using EventHandler.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace EventHandler.Web.Controllers
 {
@@ -9,18 +11,28 @@ namespace EventHandler.Web.Controllers
     [ApiController]
     public class ResourceController : ControllerBase
     {
+        private readonly ILogger<ResourceController> _logger;
         IResourceService _resourceService;
 
-        public ResourceController(IResourceService resourceService)
+        public ResourceController(IResourceService resourceService, ILogger<ResourceController> logger)
         {
             _resourceService = resourceService;
+            _logger = logger;
         }
 
         [HttpGet]
         [Route("{lang}/translations.json")]
         public Dictionary<string, string> Get(string lang)
         {
-            return _resourceService.GetResources(lang);
+            try
+            {
+                return _resourceService.GetResources(lang);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
         }
     }
 }

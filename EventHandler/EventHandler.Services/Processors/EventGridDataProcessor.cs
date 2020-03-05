@@ -19,7 +19,7 @@ namespace EventHandler.Services.Processors
         private readonly IResourceService _resourceService;
 
         internal EventGridDataProcessor(IEventRepository eventRepository,
-            IResourceService resourceService,
+          IResourceService resourceService,
             string locale = _defaultLocale)
         {
             _eventRepository = eventRepository;

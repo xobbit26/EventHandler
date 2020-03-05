@@ -4,6 +4,7 @@ using EventHandler.DTO;
 using EventHandler.DTO.Grid;
 using EventHandler.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace EventHandler.Web.Controllers
 {
@@ -11,11 +12,13 @@ namespace EventHandler.Web.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
+        private readonly ILogger<EventController> _logger;
         private readonly IEventService _eventService;
 
-        public EventController(IEventService eventService)
+        public EventController(IEventService eventService, ILogger<EventController> logger)
         {
             _eventService = eventService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -28,7 +31,7 @@ namespace EventHandler.Web.Controllers
             }
             catch (Exception ex)
             {
-                //TODO: add logging
+                _logger.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -36,7 +39,15 @@ namespace EventHandler.Web.Controllers
         [HttpPost]
         public void Post([FromBody] EventDTO eventDTO)
         {
-            _eventService.CreateEvent(eventDTO);
+            try
+            {
+                _eventService.CreateEvent(eventDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
         }
     }
 }

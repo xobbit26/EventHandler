@@ -30,16 +30,16 @@ namespace EventHandler.Web
             DIConfiguration(services);
             CorsConfiguration(services);
             DBConfiguration(services);
+            LoggingConfiguration(services);
 
-            services.AddLogging();
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            logger.LogDebug($"env.EnvironmentName: {env.EnvironmentName}");
-            logger.LogDebug($"connectionString: {Configuration.GetConnectionString("DataConnection")}");
+            logger.LogInformation($"env.EnvironmentName: {env.EnvironmentName}");
+            logger.LogInformation($"connectionString: {Configuration.GetConnectionString("DataConnection")}");
 
             if (env.IsDevelopment() || env.EnvironmentName == "DevelopmentAlternateSQLConnection")
             {
@@ -50,10 +50,7 @@ namespace EventHandler.Web
             app.UseCors(_eventHandlerUIOrigin);
             //app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
 
         private void DIConfiguration(IServiceCollection services)
@@ -85,6 +82,15 @@ namespace EventHandler.Web
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DataConnection"),
                     assembly => assembly.MigrationsAssembly(typeof(EventHandlerDbContext).Assembly.FullName));
+            });
+        }
+
+        private void LoggingConfiguration(IServiceCollection services)
+        {
+            services.AddLogging(lc =>
+            {
+                lc.AddConsole();
+                lc.AddFile(Configuration.GetSection("Logging").GetSection("FilePath").Value);
             });
         }
     }
